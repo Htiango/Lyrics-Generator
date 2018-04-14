@@ -5,20 +5,41 @@
 
 
 '''
-15688 final project
-lyric generator
+15688 final project - lyric generator
+
+data collection
+
+retrieve the artists, genres and tracks and export to csv file
+
+API used: musixmatch Developer
+documentation: https://developer.musixmatch.com/documentation
+
 '''
 import os
 import json
 import requests
 import pandas as pd
-from bs4 import BeautifulSoup
 
-api = "2d1c084b949c9033f589d692764998b4"
+with open("../musicmatch_api.key",'r') as f:
+		api = f.read()
 
 root = "http://api.musixmatch.com/ws/1.1/"
 
-def get_singer(pageNum:int, page_size=100, country = "us"):
+def get_artist(api, pageNum:int, page_size=100, country = "us"):
+
+	'''
+	getting top artists and their genres
+
+	Args:
+		api: API key
+		pageNum: the page number for paginated results
+		page_size: the page size for paginated results. Range is 1 to 100
+		country: country of the artist ranking
+	Return:
+		df: a pandas dataframe containing artists, genres and genre id
+		all_genres: a set of all genres related to the artists found
+
+	'''
 	result = []
 	all_genres = set()
 	for i in range(pageNum):
@@ -47,7 +68,21 @@ def get_singer(pageNum:int, page_size=100, country = "us"):
 	df = df.loc[:, ["artist", "genre", "genre_id"]]
 	return df, all_genres
 
-def get_songs(artist_df, page_size = 100):
+def get_songs(api, artist_df, page_size = 100):
+
+
+	'''
+	getting track names by artists and genre id
+
+	Args:
+		api: API key
+		artist_df: dataframe with columns of artist, genre and genre id
+		page_size: the page size for paginated results. Range is 1 to 100
+	Return:
+		df: a pandas dataframe containing artists, genres, genre id and the top
+		100 tracks with lyrics under that genre by the artist
+		
+	'''
 
 	result = []
 
@@ -55,8 +90,8 @@ def get_songs(artist_df, page_size = 100):
 		param = {
 				"apikey":api,
 				"q_artist": row['artist'],
-				"f_music_genre_id": row['genre_id'],
-				"f_has_lyrics":"True",
+				"f_music_genre_id": row['genre_id'], # filter by genre id
+				"f_has_lyrics":"True", # only get tracks with lyrics
 				"page": 1,
 				"page_size": page_size
 			}
@@ -81,13 +116,13 @@ def get_songs(artist_df, page_size = 100):
 
 
 if __name__ == "__main__":
-	# df, all_genres = get_singer(2)
+	df, all_genres = get_artist(api, 10)
+	print(df.shape)
 	# df.to_csv("artist_genre.csv", index = False)
-	df = pd.read_csv("artist_genre.csv")
-	song_df = get_songs(df)
+
+	song_df = get_songs(api, df)
 	song_df.to_csv("artist_genre_track.csv", index = False)
-	# print(df.head())
-	
+
 
 
 
