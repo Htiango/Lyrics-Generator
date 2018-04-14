@@ -1,6 +1,7 @@
 import nltk
 from collections import Counter
 import numpy as np
+import string
 
 START_MARK = "["
 END_MARK = "]"
@@ -14,15 +15,15 @@ def seperate(docs_ls):
 def remove_stopwords(docs):
     stopwords=nltk.corpus.stopwords.words('english')
     stopwords = tokenize(' '.join(stopwords))
-    stopwords.extend(get_rare_words(docs))
+    # stopwords.extend(get_rare_words(docs))
     stopwords = set(stopwords)
     res = [[word for word in doc if word not in stopwords ] for doc in docs]
     return res
 
 def add_mark(docs):
-	for doc in docs:
-		doc.append(END_MARK)
-		doc.insert(0, START_MARK)
+    for doc in docs:
+        doc.append(END_MARK)
+        doc.insert(0, START_MARK)
 
 def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     """ Normalizes case and handles punctuation
@@ -75,14 +76,14 @@ def get_rare_words(tokens_ls):
     return rare_tokes
 
 
-def process(lyrics, batchSize=50):
-	"""
-	It will change lyrics to vetors as well as build the
-	features and labels for LSTM
+def process(lyrics, batchSize=5):
+    """
+    It will change lyrics to vetors as well as build the
+    features and labels for LSTM
 
-	lyric: list of str. all of the lyrics
-	return: (X, Y, vocab_size, vocab_ID, vocab)
-	"""
+    lyric: list of str. all of the lyrics
+    return: (X, Y, vocab_size, vocab_ID, vocab)
+    """
 
     lyricDocs = seperate(lyrics)
     print("Totally %d lyrics."%len(lyricDocs))
@@ -104,26 +105,116 @@ def process(lyrics, batchSize=50):
 
     lyricVector = [([wordTOIDFun(word) for word in lyricDoc]) for lyricDoc in lyricDocs] 
 
-	batchNum = (len(lyrics) - 1) // batchSize + 1
+    batchNum = (len(lyrics) - 1) // batchSize 
 
-	X = []
-	Y = []
+    X = []
+    Y = []
 
-	for i in range(batchNum):
-		batchVec = lyricVector[i*batchSize: (i+1)*batchSize]
+    for i in range(batchNum):
+        batchVec = lyricVector[i*batchSize: (i+1)*batchSize]
 
-		maxLen = max([len(vector) for vector in batchVec])
+        maxLen = max([len(vector) for vector in batchVec])
 
-		temp = np.full((batchSize, maxLen), ,np.int32)
+        temp = np.full((batchSize, maxLen), wordTOIDFun(" "),np.int32)
 
-		for j in range(batchSize):
-			temp[j, :len(batchVec[j])] = batchVec[j]
+        for j in range(batchSize):
+            temp[j, :len(batchVec[j])] = batchVec[j]
 
-		X.append(temp)
+        X.append(temp)
 
-		temp_copy = np.copy(temp)
-		temp_copy[:, :-1] = temp[:, 1:]
+        temp_copy = np.copy(temp)
+        temp_copy[:, :-1] = temp[:, 1:]
 
-		Y.append(temp2)
+        Y.append(temp_copy)
 
-	return X, Y, len(words) + 1, wordToID, words
+    return X, Y, len(words) + 1, wordToID, words
+
+docs = """ I'm hurting, baby, I'm broken down
+I need your loving, loving, I need it now
+When I'm without you
+I'm something weak
+You got me begging
+Begging, I'm on my knees
+I don't wanna be needing your love
+I just wanna be deep in your love
+And it's killing me when you're away
+Ooh, baby,
+'Cause I really don't care where you are
+I just wanna be there where you are
+And I gotta get one little taste
+Your sugar
+Yes, please
+Won't you come and put it down on me
+I'm right here, 'cause I need
+Little love and little sympathy
+Yeah you show me good loving
+Make it alright
+Need a little sweetness in my life
+Your sugar
+Yes, please
+Won't you come and put it down on me
+My broken pieces
+You pick them up
+Don't leave me hanging, hanging
+Come give me some
+When I'm without ya
+I'm so insecure
+You are the one thing
+The one thing, I'm living for
+I don't wanna be needing your love
+I just wanna be deep in your love
+And it's killing me when you're away
+Ooh, baby,
+'Cause I really don't care where you are
+I just wanna be there where you are
+And I gotta get one little taste
+Your sugar
+Yes, please
+Won't you come and put it down on me
+I'm right here, 'cause I need
+Little love and little sympathy
+Yeah you show me good loving
+Make it alright
+Need a little sweetness in my life
+Your sugar (your sugar)
+Yes, please (yes, please)
+Won't you come and put it down on me
+Yeah
+I want that red velvet
+I want that sugar sweet
+Don't let nobody touch it
+Unless that somebody's me
+I gotta be a man
+There ain't no other way
+'Cause girl you're hotter than southern California Bay
+I don't wanna play no games
+I don't gotta be afraid
+Don't give all that shy shit
+No make up on, that's my
+Sugar
+Yes, please
+Won't you come and put it down on me (down on me)
+Oh, right here (right here),
+'Cause I need (I need)
+Little love and little sympathy
+Yeah you show me good loving
+Make it alright
+Need a little sweetness in my life
+Your sugar (sugar)
+Yes, please (yes, please)
+Won't you come and put it down on me
+Your sugar
+Yes, please
+Won't you come and put it down on me
+I'm right here, 'cause I need
+Little love and little sympathy
+Yeah you show me good loving
+Make it alright
+Need a little sweetness in my life
+Your sugar
+Yes, please
+Won't you come and put it down on me
+"""
+
+print(process(docs.split('\n')))
+
