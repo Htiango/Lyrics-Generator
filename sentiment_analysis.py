@@ -2,6 +2,12 @@ import requests
 import argparse
 import json
 
+"""
+This script is a demo of how to get sentiment analysis from an online API.
+Remember each IP can only request 1000 times per day.
+If you want to exceed the limitation, you might need to automatic change 
+the IP in case of failure.
+"""
 
 URL = "http://text-processing.com/api/sentiment/"
 prefix = "text="
