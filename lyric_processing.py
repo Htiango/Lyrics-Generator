@@ -2,6 +2,8 @@ import nltk
 from collections import Counter
 import numpy as np
 import string
+import pandas as pd
+import argparse
 
 START_MARK = "["
 END_MARK = "]"
@@ -129,92 +131,31 @@ def process(lyrics, batchSize=5):
 
     return X, Y, len(words) + 1, wordToID, words
 
-docs = """ I'm hurting, baby, I'm broken down
-I need your loving, loving, I need it now
-When I'm without you
-I'm something weak
-You got me begging
-Begging, I'm on my knees
-I don't wanna be needing your love
-I just wanna be deep in your love
-And it's killing me when you're away
-Ooh, baby,
-'Cause I really don't care where you are
-I just wanna be there where you are
-And I gotta get one little taste
-Your sugar
-Yes, please
-Won't you come and put it down on me
-I'm right here, 'cause I need
-Little love and little sympathy
-Yeah you show me good loving
-Make it alright
-Need a little sweetness in my life
-Your sugar
-Yes, please
-Won't you come and put it down on me
-My broken pieces
-You pick them up
-Don't leave me hanging, hanging
-Come give me some
-When I'm without ya
-I'm so insecure
-You are the one thing
-The one thing, I'm living for
-I don't wanna be needing your love
-I just wanna be deep in your love
-And it's killing me when you're away
-Ooh, baby,
-'Cause I really don't care where you are
-I just wanna be there where you are
-And I gotta get one little taste
-Your sugar
-Yes, please
-Won't you come and put it down on me
-I'm right here, 'cause I need
-Little love and little sympathy
-Yeah you show me good loving
-Make it alright
-Need a little sweetness in my life
-Your sugar (your sugar)
-Yes, please (yes, please)
-Won't you come and put it down on me
-Yeah
-I want that red velvet
-I want that sugar sweet
-Don't let nobody touch it
-Unless that somebody's me
-I gotta be a man
-There ain't no other way
-'Cause girl you're hotter than southern California Bay
-I don't wanna play no games
-I don't gotta be afraid
-Don't give all that shy shit
-No make up on, that's my
-Sugar
-Yes, please
-Won't you come and put it down on me (down on me)
-Oh, right here (right here),
-'Cause I need (I need)
-Little love and little sympathy
-Yeah you show me good loving
-Make it alright
-Need a little sweetness in my life
-Your sugar (sugar)
-Yes, please (yes, please)
-Won't you come and put it down on me
-Your sugar
-Yes, please
-Won't you come and put it down on me
-I'm right here, 'cause I need
-Little love and little sympathy
-Yeah you show me good loving
-Make it alright
-Need a little sweetness in my life
-Your sugar
-Yes, please
-Won't you come and put it down on me
-"""
 
-print(process(docs.split('\n')))
+def generate_feature(args):
+    filename = args.filename
+    ouput_path = args.output
+
+    df = pd.read_csv(filename)
+
+    docs = df['lyric'].values.tolist()
+    X, Y, size, wordToId, words = process(docs)
+    print(size)
+    print(X)
+    print(Y)
+    # print(type(docs)) 
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--filename', type=str, 
+        required=True, help='input the path of the csv file of the lyric.')
+    parser.add_argument('-o', '--output', type=str, 
+        required=True, help='the output path of the all the required parameter.')
+
+    args = parser.parse_args()
+
+    generate_feature(args)
+
+if __name__ == "__main__":
+    main()
 
