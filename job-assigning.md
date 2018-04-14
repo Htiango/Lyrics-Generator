@@ -8,13 +8,15 @@
  + processing (H)
 
 ## Sentiment analysis
-Exploring
+Exploring:
+
+To analyze the sentiment of some text, do an HTTP POST to http://text-processing.com/api/sentiment/ with form encoded data containing the text we want to analyze. (1000 requests per IP a day)
 
 ## Generator
-
+Use LSTM model to generate a random lyric. Each time apply a gaussian distribution to choose the next word. (Until it's to the end.)
 
 ## Classificator
-
+Do a classification to an input lyric to a specific genre. 
 
   
 
