@@ -25,11 +25,10 @@ with open("../musicmatch_api.key",'r') as f:
 
 root = "http://api.musixmatch.com/ws/1.1/"
 
-def get_artist(api, pageNum:int, page_size=100, country = "us"):
+def get_artist(api, pageNum, page_size=100, country = "us"):
 
 	'''
 	getting top artists and their genres
-
 	Args:
 		api: API key
 		pageNum: the page number for paginated results
@@ -38,7 +37,6 @@ def get_artist(api, pageNum:int, page_size=100, country = "us"):
 	Return:
 		df: a pandas dataframe containing artists, genres and genre id
 		all_genres: a set of all genres related to the artists found
-
 	'''
 	result = []
 	all_genres = set()
@@ -66,6 +64,55 @@ def get_artist(api, pageNum:int, page_size=100, country = "us"):
 	
 	df = pd.DataFrame(result)
 	df = df.loc[:, ["artist", "genre", "genre_id"]]
+	return df, all_genres
+
+
+def get_artist_genre(api, all_artist_list):
+
+	'''
+	getting the artists and their genres of given list
+
+	Args:
+		api: API key
+		all_artist_list: list of all the artists
+	Return:
+		df: a pandas dataframe containing artists, genres and genre id
+		all_genres: a set of all genres related to the artists found
+
+	'''
+	result = []
+	all_genres = set()
+	param = {
+			"apikey":api,
+			"page":1,
+			"page_size":10
+		}
+	for artist in all_artist_list:
+		param["q_artist"] = artist
+
+		search_result = requests.get(root + "artist.search?", params = param)
+		response = json.loads(search_result.content)
+
+		artist_list = response.get("message").get("body").get("artist_list")
+
+		if not artist_list:
+			continue
+		artist_item = artist_list[0]
+		
+		name = artist_item.get("artist").get('artist_name')
+		genres = artist_item.get("artist").get("primary_genres").get("music_genre_list")
+		for g in genres:
+			genre = g.get("music_genre").get("music_genre_name")
+			genre_id = g.get("music_genre").get("music_genre_id")
+			all_genres.add(genre)
+			result.append({"artist":name, "genre":genre, "genre_id":genre_id})
+	
+	df = pd.DataFrame(result)
+
+	if not df.empty:
+		df = df.loc[:, ["artist", "genre", "genre_id"]]
+	else:
+		print("result is an empty dataframe")
 	return df, all_genres
 
 def get_songs(api, artist_df, page_size = 100):
@@ -116,12 +163,19 @@ def get_songs(api, artist_df, page_size = 100):
 
 
 if __name__ == "__main__":
-	df, all_genres = get_artist(api, 10)
-	print(df.shape)
-	# df.to_csv("artist_genre.csv", index = False)
+	# load all artists from csv file
+	# artist_df = pd.read_csv("artists.csv", header = None)[:50]
+	# artists_list = []
+	# for col in artist_df.columns.values:
+	# 	artists_list += list(artist_df[col])
 
-	song_df = get_songs(api, df)
-	song_df.to_csv("artist_genre_track.csv", index = False)
+	# artist_genre_df, all_genres = get_artist_genre(api, artists_list)
+	# artist_genre_df.to_csv("all_artist_genre.csv",index = False)
+
+	artist_df = pd.read_csv("all_artist_genre.csv")[1000:]
+	print(artist_df.shape)
+	song_df = get_songs(api, artist_df)
+	song_df.to_csv("all_artist_genre_tracks.csv", index = False)
 
 
 
