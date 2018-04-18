@@ -6,6 +6,8 @@ learningRateBase = 0.001
 learningRateDecreaseStep = 100
 epochNum = 100                    # train epoch
 
+generateNum = 1
+
 checkpointsPath = "./checkpoints" # checkpoints location
 
 def buildModel(wordNum, gtX, hidden_units = 128, layers = 2):
@@ -91,6 +93,7 @@ def test(wordNum, wordToID, words):
         checkPoint = tf.train.get_checkpoint_state(checkpointsPath)
         # if have checkPoint, restore checkPoint
         if checkPoint and checkPoint.model_checkpoint_path:
+            print(checkPoint.model_checkpoint_path)
             saver.restore(sess, checkPoint.model_checkpoint_path)
             print("restored %s" % checkPoint.model_checkpoint_path)
         else:
@@ -105,8 +108,8 @@ def test(wordNum, wordToID, words):
             word = probsToWord(probs1, words)
             lyric = ''
             while word != ']' and word != ' ':
-                lyric += word
-                if word == '。':
+                lyric += word + ' '
+                if word == '.':
                     lyric += '\n'
                 x = np.array([[wordToID[word]]])
                 #print(word)
