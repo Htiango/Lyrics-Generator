@@ -36,7 +36,7 @@ def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     text = text.lower()
     # text = text.replace("'s", "")
     text = text.replace("'", "")
-    text = text.replace("\n", ".\n")
+    # text = text.replace("\n", ".\n")
     text = text.replace("\t", " ")
     
     punc = string.punctuation
