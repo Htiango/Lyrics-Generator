@@ -10,14 +10,17 @@ param_saving_path = "./data/param.dat"
 def run(args):
     
     if args.mode == "train":
-        X, Y, wordNum, wordToID, words = lyric_processing.pretreatment(args.filename)
-        data = {'X': X, "Y":Y, "wordNum":wordNum, "wordToID": wordToID, "words":words}
+        # X, Y, wordNum, wordToID, words = lyric_processing.pretreatment(args.filename)
+        # data = {'X': X, "Y":Y, "wordNum":wordNum, "wordToID": wordToID, "words":words}
 
-        with open(param_saving_path, 'wb') as f:
-            pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+        # with open(param_saving_path, 'wb') as f:
+        #     pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
+        with open(param_saving_path, 'rb') as f:
+            data = pickle.load(f)
 
         print("training...")
-        model.train(X, Y, wordNum)
+        model.train(data['X'], data['Y'], data['wordNum'])
     else:
         with open(param_saving_path, 'rb') as f:
             data = pickle.load(f)
