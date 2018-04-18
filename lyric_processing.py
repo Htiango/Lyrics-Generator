@@ -17,7 +17,7 @@ def seperate(docs_ls):
 def remove_stopwords(docs):
     stopwords=nltk.corpus.stopwords.words('english')
     stopwords = tokenize(' '.join(stopwords))
-    # stopwords.extend(get_rare_words(docs))
+    stopwords.extend(get_rare_words(docs))
     stopwords = set(stopwords)
     res = [[word for word in doc if word not in stopwords ] for doc in docs]
     return res
@@ -36,9 +36,12 @@ def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     Outputs:
         list(str): tokenized text
     """
+    text = text.strip()
     text = text.lower()
-    text = text.replace("'s", '')
-    text = text.replace("'", '')
+    text = text.replace("'s", "")
+    text = text.replace("'", "")
+    text = text.replace("\n", "")
+    text = text.replace("\t", "")
     
     punc = string.punctuation
     for c in punc:
@@ -78,7 +81,7 @@ def get_rare_words(tokens_ls):
     return rare_tokes
 
 
-def process(lyrics, batchSize=5):
+def process(lyrics, batchSize=10):
     """
     It will change lyrics to vetors as well as build the
     features and labels for LSTM
@@ -144,6 +147,11 @@ def generate_feature(args):
     print(X)
     print(Y)
     # print(type(docs)) 
+
+def pretreatment(filename):
+    df = pd.read_csv(filename)
+    docs = df['lyric'].values.tolist()
+    return process(docs)
 
 def main():
     parser = argparse.ArgumentParser()
