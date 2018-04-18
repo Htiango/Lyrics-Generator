@@ -21,5 +21,7 @@ Summary the generated lyrics. (Using genesis library to do the summary.)
 ## Classificator
 Do a classification to an input lyric to a specific genre. 
 
+
+Choose 5 genre and labeling those lyrics. Run LSTM model to do the lyrics classification learning. Finally, we test our generated lyrics type using the classification we choose.
   
 
