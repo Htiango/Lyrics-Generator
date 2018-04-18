@@ -2,15 +2,27 @@ import lyric_processing
 import model
 import argparse
 
+import lyric_process_old
+import pickle
+
+param_saving_path = "./data/param.dat"
 
 def run(args):
-	X, Y, wordNum, wordToID, words = lyric_processing.pretreatment(args.filename)
-	if args.mode == "train":
+    
+    if args.mode == "train":
+        X, Y, wordNum, wordToID, words = lyric_processing.pretreatment(args.filename)
+        data = {'X': X, "Y":Y, "wordNum":wordNum, "wordToID": wordToID, "words":words}
+
+        with open(param_saving_path, 'wb') as f:
+            pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
         print("training...")
         model.train(X, Y, wordNum)
     else:
+        with open(param_saving_path, 'rb') as f:
+            data = pickle.load(f)
         print("genrating...")
-        lyrics = model.test(wordNum, wordToID, words)
+        lyrics = model.test(data['wordNum'], data['wordToID'], data['words'])
 
 
 
