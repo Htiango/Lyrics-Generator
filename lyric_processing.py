@@ -9,23 +9,19 @@ START_MARK = "["
 END_MARK = "]"
 
 def seperate(docs_ls):
-    docs_raw = [tokenize(doc) for doc in docs_ls]
+    docs_raw = [tokenize(START_MARK+doc+END_MARK) for doc in docs_ls]
     docs = remove_stopwords(docs_raw)
-    add_mark(docs)
+    print(" ".join(docs[0]))
     return docs
 
 def remove_stopwords(docs):
-    stopwords=nltk.corpus.stopwords.words('english')
-    stopwords = tokenize(' '.join(stopwords))
-    stopwords.extend(get_rare_words(docs))
+    # stopwords=nltk.corpus.stopwords.words('english')
+    # stopwords = tokenize(' '.join(stopwords))
+    stopwords = get_rare_words(docs)
     stopwords = set(stopwords)
     res = [[word for word in doc if word not in stopwords ] for doc in docs]
     return res
 
-def add_mark(docs):
-    for doc in docs:
-        doc.append(END_MARK)
-        doc.insert(0, START_MARK)
 
 def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     """ Normalizes case and handles punctuation
@@ -38,28 +34,29 @@ def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     """
     text = text.strip()
     text = text.lower()
-    text = text.replace("'s", "")
+    # text = text.replace("'s", "")
     text = text.replace("'", "")
-    text = text.replace("\n", "")
-    text = text.replace("\t", "")
+    text = text.replace("\n", ".\n")
+    text = text.replace("\t", " ")
     
     punc = string.punctuation
     for c in punc:
         if c in text:
-            text = text.replace(c, ' ')
+            text = text.replace(c, ' '+c+' ')
     
     tokens = nltk.word_tokenize(text)
-#     print(tokens)
+    # print(tokens)
     res = []
     
     for token in tokens:
         try:
             word = lemmatizer.lemmatize(token)
-            if len(word)>1:
-                try:
-                    int(word)
-                except:
-                    res.append(str(word))
+            res.append(str(word))
+            # if len(word)>1:
+            # try:
+            #     int(word)
+            # except:
+            #     res.append(str(word))
         except:
             continue
     docs=nltk.word_tokenize(" ".join(res))
@@ -141,11 +138,13 @@ def generate_feature(args):
 
     df = pd.read_csv(filename)
 
-    docs = df['lyric'].values.tolist()
+    docs = df['lyric'].values.tolist()[:100]
+    print(docs[0])
+    print()
+    print()
     X, Y, size, wordToId, words = process(docs)
     print(size)
-    print(X)
-    print(Y)
+    print(X[0][0].shape)
     # print(type(docs)) 
 
 def pretreatment(filename):
