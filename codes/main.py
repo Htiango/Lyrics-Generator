@@ -24,7 +24,7 @@ def run(args):
             data = pickle.load(f)
 
         print("training...")
-        model.train(data['X'], data['Y'], data['wordNum'], data['batchSize'])
+        model.train(data['X'], data['Y'], data['wordNum'], data['batch_size'])
     else:
         with open(param_saving_path, 'rb') as f:
             data = pickle.load(f)
