@@ -73,9 +73,9 @@ def train(X, Y, wordNum, reload=True):
                 print("epoch: %d steps:%d/%d loss:%3f" % (epoch,step,epochSteps,loss))
                 if globalStep%1000==0:
                     print("save model")
-                    save_path = saver.save(sess, '/output/model.ckpt')
-                    # print("Model saved in file: %s" % save_path)
-                    saver.save(sess,checkpointsPath + "/lyric",global_step=epoch)
+                    # save_path = saver.save(sess, '/output/model.ckpt')
+                    save_path = saver.save(sess,checkpointsPath + "/lyric",global_step=epoch)
+                    print("Model saved in file: %s" % save_path)
 
 def probsToWord(weights, words):
     """probs to word"""
