@@ -148,7 +148,7 @@ def generate_feature(args):
     print(X[0][0].shape)
     # print(type(docs)) 
 
-def pretreatment(filename):
+def pretreatment(filename, batchSize):
     df = pd.read_csv(filename)
     docs = df['lyric'].values
     P = np.random.permutation(len(docs))
@@ -156,7 +156,7 @@ def pretreatment(filename):
     docs = docs[P].tolist()
     print("Processing")
     # docs = df['lyric'].values.tolist()
-    return process(docs)
+    return process(docs, batchSize)
 
 def main():
     parser = argparse.ArgumentParser()

@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-batchSize = 10
+# batchSize = 10
 learningRateBase = 0.001
 learningRateDecreaseStep = 100
 epochNum = 100                    # train epoch
@@ -32,7 +32,7 @@ def buildModel(wordNum, gtX, hidden_units = 128, layers = 2):
     probs = tf.nn.softmax(logits)
     return logits, probs, stackCell, initState, finalState
 
-def train(X, Y, wordNum, reload=True):
+def train(X, Y, wordNum, batchSize,reload=True):
     """train model"""
     gtX = tf.placeholder(tf.int32, shape=[batchSize, None])  # input
     gtY = tf.placeholder(tf.int32, shape=[batchSize, None])  # output
