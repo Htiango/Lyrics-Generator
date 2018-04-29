@@ -9,7 +9,7 @@ START_MARK = "["
 END_MARK = "]"
 
 def seperate(docs_ls):
-    docs_raw = [tokenize(START_MARK+doc+END_MARK) for doc in docs_ls]
+    docs_raw = [tokenize(START_MARK+str(doc)+END_MARK) for doc in docs_ls]
     docs = remove_stopwords(docs_raw)
     print(" ".join(docs[0]))
     return docs
@@ -36,7 +36,7 @@ def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     text = text.lower()
     # text = text.replace("'s", "")
     text = text.replace("'", "")
-    # text = text.replace("\n", ".\n")
+    text = text.replace("\n", ".\n")
     text = text.replace("\t", " ")
     
     punc = string.punctuation
@@ -50,6 +50,7 @@ def tokenize(text, lemmatizer=nltk.stem.wordnet.WordNetLemmatizer()):
     
     for token in tokens:
         try:
+            # res.append(str(token))
             word = lemmatizer.lemmatize(token)
             res.append(str(word))
             # if len(word)>1:
@@ -73,7 +74,7 @@ def get_rare_words(tokens_ls):
     for tokens in tokens_ls:
         counter.update(tokens)
     
-    rare_tokes = [k for k,v in counter.items() if v==1]
+    rare_tokes = [k for k,v in counter.items() if v<=3]
     rare_tokes.sort()
     return rare_tokes
 
@@ -151,7 +152,9 @@ def pretreatment(filename):
     df = pd.read_csv(filename)
     docs = df['lyric'].values
     P = np.random.permutation(len(docs))
-    docs = docs[P]
+    print("Shuffling")
+    docs = docs[P].tolist()
+    print("Processing")
     # docs = df['lyric'].values.tolist()
     return process(docs)
 

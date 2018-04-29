@@ -15,6 +15,8 @@ def run(args):
 
         with open(param_saving_path, 'wb') as f:
             pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+            
+        print("model saved!")
 
         # with open(param_saving_path, 'rb') as f:
         #     data = pickle.load(f)
