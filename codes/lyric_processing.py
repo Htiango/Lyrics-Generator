@@ -149,7 +149,10 @@ def generate_feature(args):
 
 def pretreatment(filename):
     df = pd.read_csv(filename)
-    docs = df['lyric'].values.tolist()
+    docs = df['lyric'].values
+    P = np.random.permutation(len(docs))
+    docs = docs[P]
+    # docs = df['lyric'].values.tolist()
     return process(docs)
 
 def main():
