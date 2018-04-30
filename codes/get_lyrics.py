@@ -18,7 +18,7 @@ def getLyrics(songs):
         try:
             lyric = ly.get_lyrics(artist, song, linesep='\n', timeout=None)
             songs.loc[index,'lyric'] = lyric
-        except ly.LyricsNotFound:
+        except:
             continue    
         #print(lyric)
     return songs
