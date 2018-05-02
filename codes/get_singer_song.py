@@ -163,19 +163,21 @@ def get_songs(api, artist_df, page_size = 100):
 
 
 if __name__ == "__main__":
-	# load all artists from csv file
-	# artist_df = pd.read_csv("artists.csv", header = None)[:50]
+	# # Step 1 get artists and their genres
+	# # load all artists from csv file
+	# artist_df = pd.read_csv("./csv_files/all_female_artists.csv", header = None)[:50]
 	# artists_list = []
 	# for col in artist_df.columns.values:
 	# 	artists_list += list(artist_df[col])
 
 	# artist_genre_df, all_genres = get_artist_genre(api, artists_list)
-	# artist_genre_df.to_csv("all_artist_genre.csv",index = False)
+	# artist_genre_df.to_csv("./csv_files/all_female_artist_genre.csv",index = False)
 
-	artist_df = pd.read_csv("all_artist_genre.csv")[1000:]
-	print(artist_df.shape)
-	song_df = get_songs(api, artist_df)
-	song_df.to_csv("all_artist_genre_tracks.csv", index = False)
+	# Step 2 get songs by artists and genres
+	# artist_df = pd.read_csv("./csv_files/all_female_artist_genre.csv")[:1000]
+	# print(artist_df.shape)
+	# song_df = get_songs(api, artist_df)
+	# song_df.to_csv("./csv_files/all_female_artist_genre_track.csv", index = False)
 
 
 
