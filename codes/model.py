@@ -85,19 +85,20 @@ def probsToWord(weights, words):
     index = int(np.searchsorted(t, coff * s)) # large margin has high possibility to be sampled
     return words[index]
 
-def test(wordNum, wordToID, words):
+def test(wordNum, wordToID, words, model_path=checkpointsPath):
     """generate lyric"""
     gtX = tf.placeholder(tf.int32, shape=[1, None])  # input
     logits, probs, stackCell, initState, finalState = buildModel(wordNum, gtX)
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         saver = tf.train.Saver()
-        checkPoint = tf.train.get_checkpoint_state(checkpointsPath)
+        checkPoint = tf.train.get_checkpoint_state(model_path)
         # if have checkPoint, restore checkPoint
         if checkPoint and checkPoint.model_checkpoint_path:
             print(checkPoint.model_checkpoint_path)
             saver.restore(sess, checkPoint.model_checkpoint_path)
             print("restored %s" % checkPoint.model_checkpoint_path)
+            print("\n\n")
         else:
             print("no checkpoint found!")
             exit(0)
@@ -110,9 +111,14 @@ def test(wordNum, wordToID, words):
             word = probsToWord(probs1, words)
             lyric = ''
             while word != ']' and word != ' ':
-                lyric += word + ' '
                 if word == '.':
-                    lyric += '\n'
+                    try:
+                        if not (lyric[-1]=='\n' and lyric[-2] == '\n'):
+                            lyric += '\n'
+                    except:
+                        pass
+                else:
+                    lyric += word + ' '
                 x = np.array([[wordToID[word]]])
                 #print(word)
                 probs2, state = sess.run([probs, finalState], feed_dict={gtX: x, initState: state})
