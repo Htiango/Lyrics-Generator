@@ -8,8 +8,11 @@ import argparse
 START_MARK = "["
 END_MARK = "]"
 
-def seperate(docs_ls):
-    docs_raw = [tokenize(START_MARK+str(doc)+END_MARK) for doc in docs_ls]
+def seperate(docs_ls, is_rnn):
+    if is_rnn:
+        docs_raw = [tokenize(START_MARK+str(doc)+END_MARK) for doc in docs_ls]
+    else:
+        docs_raw = [tokenize(str(doc)) for doc in docs_ls]
     docs = remove_stopwords(docs_raw)
     print(" ".join(docs[0]))
     return docs
@@ -79,7 +82,7 @@ def get_rare_words(tokens_ls):
     return rare_tokes
 
 
-def process(lyrics, batchSize=10):
+def process(lyrics, batchSize=10, is_rnn=True):
     """
     It will change lyrics to vetors as well as build the
     features and labels for LSTM
@@ -88,7 +91,7 @@ def process(lyrics, batchSize=10):
     return: (X, Y, vocab_size, vocab_ID, vocab)
     """
 
-    lyricDocs = seperate(lyrics)
+    lyricDocs = seperate(lyrics, is_rnn)
     print("Totally %d lyrics."%len(lyricDocs))
 
     allWords = {}
