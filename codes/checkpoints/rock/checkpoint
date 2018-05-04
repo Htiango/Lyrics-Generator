@@ -1,0 +1,2 @@
+model_checkpoint_path: "lyric-98"
+all_model_checkpoint_paths: "lyric-98"
