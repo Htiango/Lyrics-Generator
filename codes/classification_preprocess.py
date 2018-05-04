@@ -67,7 +67,7 @@ def process(args):
     x_pad = kr.preprocessing.sequence.pad_sequences(lyricVector, max_length)
     y_pad = kr.utils.to_categorical(y, num_classes=len(cat_to_id))
 
-    data = {'X': x_pad, 'Y': y_pad, 'wordToID': wordToID}
+    data = {'X': x_pad, 'Y': y_pad, 'wordToID': wordToID, 'seq_length': max_length}
 
     param_saving_path = args.output
 
