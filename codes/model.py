@@ -113,8 +113,8 @@ def test(wordNum, wordToID, words, model_path=checkpointsPath):
             while word != ']' and word != ' ':
                 if word == '.':
                     try:
-                        if not (lyric[-1]=='\n' and lyric[-2] == '\n'):
-                            lyric += '\n'
+                        if not (lyric[-1]=='.' and lyric[-2] == '.'):
+                            lyric += '. '
                     except:
                         pass
                 else:
@@ -123,6 +123,7 @@ def test(wordNum, wordToID, words, model_path=checkpointsPath):
                 #print(word)
                 probs2, state = sess.run([probs, finalState], feed_dict={gtX: x, initState: state})
                 word = probsToWord(probs2, words)
-            print(lyric)
+            print("The generated lyrics: \n")
+            print(lyric.replace(". ", "\n"))
             lyrics.append(lyric)
         return lyrics
