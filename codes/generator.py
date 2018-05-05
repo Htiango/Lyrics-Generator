@@ -1,6 +1,8 @@
 import argparse
 import pickle
-import model
+from model import test as generate_model
+from classification_model import test as classify_model
+import tensorflow as tf
 
 pop_model = "./checkpoints/pop"
 pop_save = "./generate-param/param-pop-10-test.dat"
@@ -10,6 +12,10 @@ rock_save = "./generate-param/param-rock-10-test.dat"
 
 rap_model = "./checkpoints/rap"
 rap_save = "./generate-param/param-rap-10-test.dat"
+
+classify_model_path = "./checkpoints/textcnn"
+classify_save = "./generate-param/param-classify-test.dat"
+
 
 def run(args):
     genre = args.genre
@@ -31,11 +37,17 @@ def run(args):
 
     print('generating...')
 
-    lyrics = model.test(data['wordNum'], 
+    lyrics = generate_model(data['wordNum'], 
         data['wordToID'], 
         data['words'], 
         model_path=model_path)
 
+    print('\n\n')
+    tf.reset_default_graph()
+
+    predicted = classify_model(lyrics[0], classify_save, genre, model_path=classify_model_path)
+    print("\n\nOur classification model predict it to be: ")
+    print(predicted)
 
 def main():
     parser = argparse.ArgumentParser()
