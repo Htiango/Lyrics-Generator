@@ -109,6 +109,10 @@ The saved data is too big to upload to github, the pickle files in `./codes/gene
 #### Part 1. LSTM model
 Here we use LSTM model to generate lyrics for different genres. [This blog](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) clearly states the knowledge of LSTM. <br>
 For each genres, we do preprocessing and save the needed parameters into pickle files. Then we load the specific pickle file and train the LSTM model for the genre. <br>
+The architecture of the LSTM model is shown below:
+![LSTM-model](https://oh1ulkf4j.qnssl.com/LSTM-model.jpg)
+
+
 The word IDs will be embedded into a dense representation before feeding to the LSTM, which is called embedding layer. Here we use 2 layers of LSTM to process the data, followed by softmax representing each word's appearing probability. <br>
 In the training stage, we do 100 epoches. Since the data we use is very large and LSTM model is very slow to train. Here we use AWS to train 3 models for 3 genres. Even on AWS GPU server, it took nearly 40 hours to train. (40+ hours to train for pop, 18+ hours to train for rap and 10+ hours to train for rock). <br>
 The models are saved in:
