@@ -16,17 +16,16 @@ Usage: Run "python3 sentiment_analysis -t [TEXT YOU WANT TO ANALYSIS]",
 URL = "http://text-processing.com/api/sentiment/"
 prefix = "text="
 
-def get_sentiment(args):
-	text = args.text
-	param = prefix + text
-	response = requests.post(URL, param)
-	res = response.json()
-	pos_dict = res['probability']
-	label = res['label']
-	print("The label is: " + label)
-	print("The positive possibility is: %f"%pos_dict["pos"])
-	print("The negative possibility is: %f"%pos_dict["neg"])
-	print("The netural possibility is: %f"%pos_dict["neutral"])
+def get_sentiment(text):
+    param = prefix + text
+    response = requests.post(URL, param)
+    res = response.json()
+    pos_dict = res['probability']
+    label = res['label']
+    print("The label is: " + label)
+    print("The positive possibility is: %f"%pos_dict["pos"])
+    print("The negative possibility is: %f"%pos_dict["neg"])
+    print("The netural possibility is: %f"%pos_dict["neutral"])
 
 def main():
     parser = argparse.ArgumentParser()
@@ -35,7 +34,7 @@ def main():
 
     args = parser.parse_args()
 
-    get_sentiment(args)
+    get_sentiment(args.text)
 
 if __name__ == "__main__":
     main()
