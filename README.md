@@ -17,6 +17,168 @@ Then the generated lyric will be print on the console.
 
 And our classification model will verify the genre of the generated lyric.
 
+## Result:
+Here are some of the results:<br>
+
+When generating pop lyric:
+
+```
+in black vision in the sunshine  
+never noticed the end  
+ 
+everything that will come  
+it incredible , complete  
+it getting with you like a summer song  
+i never saw it bloom , i want it  
+higher than living until the light is gone  
+the way i find a way to shine  
+still watch them fade away  
+never felt so wrong  
+( and i let the sun shine on ( yeh )  
+so touch my heart  
+( ad - lib )  
+ 
+yeah , i don't wan na lose  
+and the one and more  
+it an love , make it strong  
+you see , but it got me so good  
+youre my doubt  
+ 
+we had a price tag darlin  
+up against the door  
+were down on my knee  
+built forever on the chain  
+hold your head  
+diamond in our heart  
+a night , with your dream  
+youre taking the breath ( of my body )  
+im wicked , yeah  
+ 
+cause i love my way in love  
+reaching out to all these stone tonight  
+all alone and a trail of the promise  
+for what i do  
+ 
+what you can see  
+a mirror of me  
+complete me  
+i am a love i  
+livin love  
+im on a mission  
+like just a better love  
+ 
+im your freak off the light , fire  
+going down again  
+im gon na dance to a show  
+ 
+gim me what this love bout  
+i want to be my only sin  
+i can tell  
+cause i can feel it happening  
+ 
+it like an ocean liner  
+and we are in it cup  
+every one working fun , it slow  
+i know it too late at night  
+it summer a long time  
+to the wind on - a figure in sea  
+heartbreak getting road to meet  
+only sleep tonight  
+im a young girl  
+i get tongue around on ,  
+cause i got better for you  
+it got ta never bring back time , ooh  
+it over now  
+it torture on front  
+the end of my mind and it my  
+you can be over  
+always on my mind  
+yeah yeah  
+ 
+( gettin close , under my sheet )  
+now im calling out  
+if my back so you can't see  
+it look like i miss it  
+said it o - o - no  
+didnt take , doing it but getting back  
+never seen letting go ( go )  
+how im gon be so early before )  
+ 
+im hooked my name  
+but it a natural fact  
+im there a much for an last just debris  
+it time too much to work out  
+ 
+im going on , yeah  
+yeah im gon na turn to you  
+to the way it real  
+it the rush , my body , now  
+i got to get to lose it  
+thats the end of my head  
+ 
+walking on broken glass , rocket road to fall  
+and then im in my own  
+don't ever mess alone  
+youre alone with nothing left behind  
+and i got thunder on the floor  
+found a hero  
+but i feel like a living fed my heart  
+that make me up and shake  
+a i im  
+caught up in my foot  
+nothing came to me , im in my hand  
+ 
+could come out off you  
+oh , oh , woah - oh - oh - honey  
+uh - ah  
+came over , right now  
+ 
+i got that walkin back of the one  
+i got nothing but a soldier with a taste  
+whats yesterday any time , im able  
+i wasnt really like  
+im gon na be in the moment like  
+weak and my , my middle  
+all for my time , where my mind feel  
+im on an island  
+slowly , oh , im building  
+tomorrow  
+ 
+whoa , i got ta get it back  
+i know that i got ta go  
+youd never be the same  
+im going home  
+cause it is hard to forgive my boo  
+i got ta make a move , no say ive got  
+yeah , the beat drop  
+and i don't know about you  
+ 
+but somehow im a sign  
+i know there one little strength to beat myself  
+but im not the type i feel lost with love  
+im twenty foot to my bed , woah  
+oh , oh , oh  
+ 
+i don't want praise , i can't stop this really be  
+this time if i take it down  
+im just takin the breath can you bring my time ``  
+cause im all go on a mission , now  
+im gon na play this best friend  
+and never let this go today  
+cause im never gon na go , go and move  
+like a bird of a summer night  
+and it time it grow high  
+and it get harder till we take the sun  
+somehow won't make it through  
+baby , come back now  
+ooh , see i walk on and on the floor  
+on my lip and im on top of me  
+ 
+got ta get on this club  
+keep , cause he got that  
+ooh oh 
+```
+
 ## Project Steps
 (If you want to start from the beginning) 
 
