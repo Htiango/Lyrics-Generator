@@ -140,10 +140,10 @@ python3 classification_model.py -h
 to choose training or testing mode. 
 
 The training loss figure is:
-![Screen Shot 2018-05-07 at 9.25.54 PM](https://oh1ulkf4j.qnssl.com/Screen Shot 2018-05-07 at 9.25.54 PM.png)
+![Screen Shot 2018-05-07 at 9.25.54 PM](https://oh1ulkf4j.qnssl.com/Screen%20Shot%202018-05-07%20at%209.25.54%20PM.png)
 
 And the training accuracy figure is:
-![Screen Shot 2018-05-07 at 9.25.40 PM](https://oh1ulkf4j.qnssl.com/Screen Shot 2018-05-07 at 9.25.40 PM.png)
+![Screen Shot 2018-05-07 at 9.25.40 PM](https://oh1ulkf4j.qnssl.com/Screen%20Shot%202018-05-07%20at%209.25.40%20PM.png)
 
 The above figures are recorded by tensorboard.
 
