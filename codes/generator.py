@@ -3,6 +3,7 @@ import pickle
 from model import test as generate_model
 from classification_model import test as classify_model
 import tensorflow as tf
+from sentiment_analysis import get_sentiment
 
 pop_model = "./checkpoints/pop"
 pop_save = "./generate-param/param-pop-10-test.dat"
@@ -48,6 +49,9 @@ def run(args):
     predicted = classify_model(lyrics[0], classify_save, genre, model_path=classify_model_path)
     print("\n\nOur classification model predict it to be: ")
     print(predicted)
+
+    print("\nAnd the sentiment analysis result of the generated lyric is:")
+    get_sentiment(lyrics[0])
 
 def main():
     parser = argparse.ArgumentParser()
