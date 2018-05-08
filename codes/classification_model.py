@@ -213,7 +213,7 @@ def train(filename):
                       + ' Val Loss: {3:>4.4}, Val Acc: {4:>5.2%}, Time: {5} {6}'
                 print(msg.format(total_batch, loss_train, acc_train, loss_val, acc_val, time_dif, improved_str))
 
-            session.run(model.optim, feed_dict=feed_dict)  # 运行优化
+            session.run(model.optim, feed_dict=feed_dict)  
             total_batch += 1
 
             if total_batch - last_improved > require_improvement:
