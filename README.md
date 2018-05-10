@@ -5,6 +5,7 @@ The method we use to generate lyrics is LSTM model.
 
 And the method we use to classify lyric into genre is CNN model.
 
+We also made [this video](https://www.youtube.com/watch?v=Iw4cQcA8Z24) to help you understand our project.
 
 ## Generate lyrics
 Go to directory `codes/`, run script `generator.py` with the following command:
