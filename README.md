@@ -5,6 +5,8 @@ The method we use to generate lyrics is LSTM model.
 
 And the method we use to classify lyric into genre is CNN model.
 
+You can go to [this tutorial](https://github.com/Htiango/Lyrics-Generator/blob/master/codes/Tutorial.ipynb) to have a brief understanding of this project and know how to start.
+
 We also made [this video](https://www.youtube.com/watch?v=Iw4cQcA8Z24) to help you understand our project.
 
 ## Generate lyrics
